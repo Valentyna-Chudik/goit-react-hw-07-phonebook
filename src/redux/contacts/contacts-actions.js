@@ -1,40 +1,17 @@
-// REDUX TOOLKIT
-import { v4 as uuidv4 } from 'uuid';
 import { createAction } from '@reduxjs/toolkit';
 
-export const addContact = createAction('contacts/Add', (name, number) => {
-  return {
-    payload: {
-      id: uuidv4(),
-      name,
-      number,
-    },
-  };
-});
+export const addContactRequest = createAction('contacts/addContactRequest');
+export const addContactSuccess = createAction('contacts/addContactSuccess');
+export const addContactError = createAction('contacts/addContactError');
 
 export const deleteContact = createAction('contacts/Delete');
 
+// const deleteContactRequest = createAction('contacts/deleteContactRequest');
+// const deleteContactSuccess = createAction('contacts/deleteContactSuccess');
+// const deleteContactError = createAction('contacts/deleteContactError');
+
 export const filterChange = createAction('contacts/FilterChange');
 
-// REDUX
-// import { v4 as uuidv4 } from 'uuid';
-// import { ADD, DELETE, FILTER_CHANGE } from './contacts-types';
-
-// export const addContact = (name, number) => ({
-//   type: ADD,
-//   payload: {
-//     id: uuidv4(),
-//     name,
-//     number,
-//   },
-// });
-
-// export const deleteContact = contactId => ({
-//   type: DELETE,
-//   payload: contactId,
-// });
-
-// export const filterChange = value => ({
-//   type: FILTER_CHANGE,
-//   payload: value,
-// });
+// const filterContactRequest = createAction('contacts/filterContactRequest');
+// const filterContactSuccess = createAction('contacts/filterContactSuccess');
+// const filterContactError = createAction('contacts/filterContactError');

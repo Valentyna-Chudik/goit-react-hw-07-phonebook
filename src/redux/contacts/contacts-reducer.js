@@ -1,12 +1,23 @@
-// REDUX TOOLKIT
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
-import { addContact, deleteContact, filterChange } from './contacts-actions';
+import {
+  addContactRequest,
+  addContactSuccess,
+  addContactError,
+  deleteContact,
+  filterChange,
+} from './contacts-actions';
 
 const items = createReducer([], {
-  [addContact]: (state, { payload }) => [...state, payload],
+  [addContactSuccess]: (state, { payload }) => [...state, payload],
   [deleteContact]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
+});
+
+const loading = createReducer(false, {
+  [addContactRequest]: () => true,
+  [addContactSuccess]: () => false,
+  [addContactError]: () => false,
 });
 
 const filter = createReducer('', {
@@ -16,36 +27,5 @@ const filter = createReducer('', {
 export default combineReducers({
   items,
   filter,
+  loading,
 });
-
-// REDUX
-// import { combineReducers } from 'redux';
-// import { ADD, DELETE, FILTER_CHANGE } from './contacts-types';
-
-// const items = (state = [], { type, payload }) => {
-//   switch (type) {
-//     case ADD:
-//       return [...state, payload];
-
-//     case DELETE:
-//       return state.filter(({ id }) => id !== payload);
-
-//     default:
-//       return state;
-//   }
-// };
-
-// const filter = (state = '', { type, payload }) => {
-//   switch (type) {
-//     case FILTER_CHANGE:
-//       return payload;
-
-//     default:
-//       return state;
-//   }
-// };
-
-// export default combineReducers({
-//   items,
-//   filter,
-// });
