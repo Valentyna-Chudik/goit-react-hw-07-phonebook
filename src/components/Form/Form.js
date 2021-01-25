@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { addContact } from '../../redux/contacts/contacts-operations';
-import { getContacts } from '../../redux/contacts/contacts-selectors';
+import {
+  getContacts,
+  getLoading,
+} from '../../redux/contacts/contacts-selectors';
 import styles from './Form.module.css';
 
 export default function Form() {
   const contacts = useSelector(getContacts);
+  const isLoading = useSelector(getLoading);
   const dispatch = useDispatch();
   const onSubmit = (name, number) => dispatch(addContact(name, number));
 
@@ -54,33 +58,38 @@ export default function Form() {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <label className={styles.label}>
-        <span className={styles.inputName}>Name</span>
-        <input
-          className={styles.input}
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={name}
-          onChange={handleInputChange}
-        ></input>
-      </label>
-      <label className={styles.label}>
-        <span className={styles.inputName}>Number</span>
-        <input
-          className={styles.input}
-          type="tel"
-          name="number"
-          placeholder="Number"
-          value={number}
-          onChange={handleInputChange}
-        ></input>
-      </label>
-      <button className={styles.buttonAdd} type="submit">
-        Add contact
-      </button>
-    </form>
+    <>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <label className={styles.label}>
+          <span className={styles.inputName}>Name</span>
+          <input
+            className={styles.input}
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={name}
+            onChange={handleInputChange}
+          ></input>
+        </label>
+        <label className={styles.label}>
+          <span className={styles.inputName}>Number</span>
+          <input
+            className={styles.input}
+            type="tel"
+            name="number"
+            placeholder="Number"
+            value={number}
+            onChange={handleInputChange}
+          ></input>
+        </label>
+        {!isLoading && (
+          <button className={styles.buttonAdd} type="submit">
+            Add contact
+          </button>
+        )}
+      </form>
+      {isLoading && <h1>Loading...</h1>}
+    </>
   );
 }
 
