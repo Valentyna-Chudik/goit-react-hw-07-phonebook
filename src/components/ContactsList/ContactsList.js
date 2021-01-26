@@ -9,25 +9,26 @@ import {
 import {
   getVisibleContacts,
   getError,
+  getLoading,
 } from '../../redux/contacts/contacts-selectors';
+import Notification from '../Notification/Notification';
 import styles from './ContactsList.module.css';
 
 export default function ContactsList() {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getVisibleContacts);
+  const visibleContacts = useSelector(getVisibleContacts);
   const error = useSelector(getError);
-
+  const isLoading = useSelector(getLoading);
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchContact());
   }, [dispatch]);
-
   const onDeleteContact = id => dispatch(deleteContact(id));
 
   return (
     <>
-      {contacts.length > 0 && !error ? (
+      {visibleContacts.length > 0 && !error && (
         <ul className={styles.contactsList}>
-          {contacts.map(({ id, name, number }) => (
+          {visibleContacts.map(({ id, name, number }) => (
             <li className={styles.contactsItem} key={id}>
               <p className={styles.contactName}>
                 {name}: {number}
@@ -42,9 +43,11 @@ export default function ContactsList() {
             </li>
           ))}
         </ul>
-      ) : (
-        <div>{error && <h1>Error</h1>}</div>
       )}
+      {!visibleContacts.length && !error && !isLoading && (
+        <Notification message="No records yet." />
+      )}
+      {error && <h2>{error.message}</h2>}
     </>
   );
 }

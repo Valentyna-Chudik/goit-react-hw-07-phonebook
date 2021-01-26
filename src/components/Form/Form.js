@@ -7,6 +7,7 @@ import {
   getContacts,
   getLoading,
 } from '../../redux/contacts/contacts-selectors';
+import Loader from '../Loader/Loader';
 import styles from './Form.module.css';
 
 export default function Form() {
@@ -88,7 +89,7 @@ export default function Form() {
           </button>
         )}
       </form>
-      {isLoading && <h1>Loading...</h1>}
+      {isLoading && <Loader />}
     </>
   );
 }
